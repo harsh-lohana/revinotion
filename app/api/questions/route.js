@@ -23,6 +23,7 @@ export async function GET(req) {
       })
     }
     questions.push({
+      id: q[i].id,
       name: q[i].properties.Name.title[0].plain_text,
       topics,
       url: q[i].properties.Name.title[0].href
