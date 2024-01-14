@@ -7,7 +7,7 @@ const notion = new Client({
   auth: secret,
 });
 
-export async function GET(req: Request) {
+export async function GET(req) {
   if (!secret || !dbId) throw new Error("Missing Notion stuff!");
   const res = await notion.databases.retrieve({
     database_id: dbId,
