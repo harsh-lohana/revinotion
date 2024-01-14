@@ -12,7 +12,21 @@ export async function GET(req) {
   const res = await notion.databases.query({
     database_id: dbId,
   });
-  const q = res.results[0].properties.Name.title[0].plain_text;
-  console.log(q)
-  return Response.json({ q });
+  const questions = [];
+  const q = res.results;
+  for(let i = 0; i < q.length; i++) {
+    const topics = [];
+    for(let j = 0; j < q[i].properties.Topics.multi_select.length; j++) {
+      topics.push({
+        name: q[i].properties.Topics.multi_select[j].name,
+        color: q[i].properties.Topics.multi_select[j].color
+      })
+    }
+    questions.push({
+      name: q[i].properties.Name.title[0].plain_text,
+      topics,
+      url: q[i].properties.Name.title[0].href
+    })
+  }
+  return Response.json({ questions });
 }
