@@ -13,5 +13,13 @@ export async function GET(req) {
     database_id: dbId,
   });
   const q = res.results;
-  return Response.json({ q });
+  const pageIds = [];
+  for(let i = 0; i < q.length; i++) {
+    pageIds.push(q[i].id);
+  }
+  // const pages = [];
+  const pageId = pageIds[0];
+  const response = await notion.pages.retrieve({ page_id: pageId });
+  console.log(response);
+  return Response.json({ response });
 }

@@ -12,6 +12,12 @@ import {
 } from "react";
 import Link from "next/link";
 import { UrlObject } from "url";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 function MainPage() {
   const [loading, setLoading] = useState<any>(false);
@@ -27,15 +33,14 @@ function MainPage() {
       const resq = await fetch("/api/questions");
       const op = await resq.json();
       setQusetions(op.questions);
-      console.log(op.questions);
       setLoading(false);
     })();
     return () => {};
   }, []);
 
   return (
-    <div>
-      <h1>{title}</h1>
+    <main className="flex flex-col h-screen items-center">
+      <h1 className="text-4xl">{title}</h1>
       <div>
         {questions &&
           questions?.map(
@@ -56,21 +61,47 @@ function MainPage() {
                 | undefined;
             }) => (
               <div key={q.id}>
-                <h1>
-                  <Link href={q.url}>{q.name}</Link>
-                </h1>
-                <div>
-                  {
-                    q.topics && q.topics.map((t: { name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }) => (
-                      <span key={q.color}>{t.name}</span>
-                    ))
-                  }
-                </div>
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>
+                      <Link href={q.url}>{q.name}</Link>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex">
+                        {q.topics &&
+                          q.topics.map(
+                            (t: {
+                              color: ReactNode;
+                              name:
+                                | string
+                                | number
+                                | boolean
+                                | ReactElement<
+                                    any,
+                                    string | JSXElementConstructor<any>
+                                  >
+                                | Iterable<ReactNode>
+                                | ReactPortal
+                                | PromiseLikeOfReactNode
+                                | null
+                                | undefined;
+                            }) => (
+                              <div key={q.id}>
+                                <h3 className="bg-green-200 w-fit px-2 py-1 mx-1 rounded-xl flex justify-center items-center">
+                                  {t.name}
+                                </h3>
+                              </div>
+                            )
+                          )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             )
           )}
       </div>
-    </div>
+    </main>
   );
 }
 
