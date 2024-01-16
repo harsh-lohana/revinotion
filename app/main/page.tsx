@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 function MainPage() {
   const [loading, setLoading] = useState<any>(false);
@@ -41,6 +42,9 @@ function MainPage() {
   return (
     <main className="flex flex-col h-screen items-center">
       <h1 className="text-4xl">{title}</h1>
+      <Link href="/potd">
+        <Button>POTD</Button>
+      </Link>
       <div>
         {questions &&
           questions?.map(
