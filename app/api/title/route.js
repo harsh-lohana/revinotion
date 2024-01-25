@@ -15,3 +15,5 @@ export async function GET(req) {
   const title = res.title[0].plain_text;
   return Response.json({ title });
 }
+
+export const dynamic = 'force-dynamic'

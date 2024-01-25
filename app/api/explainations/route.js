@@ -23,3 +23,5 @@ export async function GET(req) {
   console.log(response);
   return Response.json({ response });
 }
+
+export const dynamic = 'force-dynamic'

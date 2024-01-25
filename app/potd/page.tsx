@@ -9,7 +9,7 @@ const POTD = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const resq = await fetch("/api/potd");
+      const resq = await fetch("/api/potd", { cache: 'no-store' });
       const op = await resq.json();
       setRandomQusetion(op.random);
       console.log(op.random);

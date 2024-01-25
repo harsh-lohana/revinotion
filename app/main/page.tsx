@@ -28,10 +28,10 @@ function MainPage() {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const res = await fetch("/api/title");
+      const res = await fetch("/api/title", { cache: 'no-store' });
       const output = await res.json();
       setTitle(output.title);
-      const resq = await fetch("/api/questions");
+      const resq = await fetch("/api/questions", { cache: 'no-store' });
       const op = await resq.json();
       setQusetions(op.questions);
       setLoading(false);

@@ -32,3 +32,5 @@ export async function GET(req) {
   const random = questions[Math.floor(Math.random()*questions.length)];
   return Response.json({ random });
 }
+
+export const dynamic = 'force-dynamic'

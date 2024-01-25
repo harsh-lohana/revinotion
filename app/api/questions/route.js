@@ -31,3 +31,5 @@ export async function GET(req) {
   }
   return Response.json({ questions });
 }
+
+export const dynamic = 'force-dynamic'
