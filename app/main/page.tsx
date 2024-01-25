@@ -110,3 +110,5 @@ function MainPage() {
 }
 
 export default MainPage;
+
+export const dynamic = 'force-dynamic'

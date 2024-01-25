@@ -12,3 +12,5 @@ export default function LandingLayout({
     </div>
   );
 }
+
+export const dynamic = 'force-dynamic'

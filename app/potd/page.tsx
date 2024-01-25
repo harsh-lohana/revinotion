@@ -27,3 +27,5 @@ const POTD = () => {
 };
 
 export default POTD;
+
+export const dynamic = 'force-dynamic'
