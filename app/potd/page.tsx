@@ -12,7 +12,7 @@ const POTD = () => {
       const resq = await fetch("/api/potd");
       const op = await resq.json();
       setRandomQusetion(op.random);
-      console.log(randomQuestion);
+      console.log(op.random);
       setLoading(false);
     })();
     return () => {};
