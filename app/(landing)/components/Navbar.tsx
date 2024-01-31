@@ -27,6 +27,7 @@ async function Navbar() {
               <Button variant="outline">Open App</Button>
             </Link>
             <UserButton />
+            <h2>{user.emailAddresses[0].emailAddress}</h2>
           </div>
         ) : (
           <SignInButton />

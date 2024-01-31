@@ -1,4 +1,5 @@
 import { Client } from "@notionhq/client";
+import prisma from "@/app/lib/prisma";
 
 const secret = process.env.NOTION_SECRET;
 const dbId = process.env.NOTION_DATABASE_ID;
@@ -29,5 +30,13 @@ export async function GET(req) {
       url: q[i].properties.Name.title[0].href,
     });
   }
-  return Response.json({ questions });
+  const random = questions[Math.floor(Math.random() * questions.length)];
+  const potd = await prisma.problem.create({
+    data: {
+      name: random.name,
+      url: random.url,
+      topics: random.topics
+    },
+  });
+  return Response.json({ potd });
 }

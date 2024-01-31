@@ -23,5 +23,3 @@ export default function RootLayout({
     </ClerkProvider>
   );
 }
-
-export const dynamic = 'force-dynamic'

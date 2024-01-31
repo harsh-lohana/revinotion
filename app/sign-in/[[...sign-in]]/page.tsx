@@ -7,5 +7,3 @@ export default function Page() {
     </main>
   );
 }
-
-export const dynamic = 'force-dynamic'

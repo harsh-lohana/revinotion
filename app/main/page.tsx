@@ -28,10 +28,10 @@ function MainPage() {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const res = await fetch("/api/title", { cache: 'no-store' });
+      const res = await fetch("/api/title", { cache: "no-store" });
       const output = await res.json();
       setTitle(output.title);
-      const resq = await fetch("/api/questions", { cache: 'no-store' });
+      const resq = await fetch("/api/questions", { cache: "no-store" });
       const op = await resq.json();
       setQusetions(op.questions);
       setLoading(false);
@@ -42,8 +42,8 @@ function MainPage() {
   return (
     <main className="flex flex-col h-screen items-center">
       <h1 className="text-4xl">{title}</h1>
-      <Link href="/potd">
-        <Button>POTD</Button>
+      <Link href="/random">
+        <Button>Random</Button>
       </Link>
       <div>
         {questions &&
@@ -111,4 +111,4 @@ function MainPage() {
 
 export default MainPage;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

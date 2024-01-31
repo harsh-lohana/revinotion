@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const POTD = () => {
@@ -9,10 +10,9 @@ const POTD = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const resq = await fetch("/api/potd", { cache: 'no-store' });
+      const resq = await fetch("/api/random", { cache: "no-store" });
       const op = await resq.json();
       setRandomQusetion(op.random);
-      console.log(op.random);
       setLoading(false);
     })();
     return () => {};
@@ -20,12 +20,16 @@ const POTD = () => {
 
   return (
     <main className="flex flex-col h-screen items-center">
-      <h1 className="text-4xl">POTD</h1>
-      <h2>{randomQuestion && randomQuestion.name}</h2>
+      <h1 className="text-4xl">Random</h1>
+      {randomQuestion && (
+        <div className="flex flex-col">
+          <Link href={randomQuestion.url}>
+            <h1>{randomQuestion.name}</h1>
+          </Link>
+        </div>
+      )}
     </main>
   );
 };
 
 export default POTD;
-
-export const dynamic = 'force-dynamic'
