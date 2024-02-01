@@ -38,5 +38,6 @@ export async function GET(req) {
       topics: random.topics
     },
   });
+  console.log(potd);
   return Response.json({ potd });
 }
