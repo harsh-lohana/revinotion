@@ -30,6 +30,6 @@
     "app/api/questions/route.js",
     "app/api/title/route.js",
     "app/main/page.tsx"
-, "app/api/test/route.js"  ],
+, "app/api/test/route.js", "app/api/send/route.js"  ],
   "exclude": ["node_modules"]
 }
