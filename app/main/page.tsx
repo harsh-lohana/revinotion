@@ -8,6 +8,8 @@ import {
   ReactNode,
   ReactPortal,
   useEffect,
+  useReducer,
+  useRef,
   useState,
 } from "react";
 import Link from "next/link";
@@ -18,12 +20,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar"
+import { useRouter } from "next/navigation";
 
 function MainPage() {
   const [loading, setLoading] = useState<any>(false);
   const [title, setTitle] = useState<any>("");
   const [questions, setQusetions] = useState<any>();
+  const [date, setDate] = useState<Date | any>(new Date());
+
+  const { push } = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -36,24 +42,34 @@ function MainPage() {
       setQusetions(op.questions);
       setLoading(false);
     })();
-    return () => {};
+    return () => { };
   }, []);
+
+  const isFirstRun = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    const last = date - (24 * 60 * 60 * 1000);
+    const lastDay = new Date(last).toISOString();
+    push(`/potd/${lastDay}`)
+  }, [date]);
 
   return (
     <main className="flex flex-col h-screen items-center">
-      <h1 className="text-4xl">{title}</h1>
-      <Link href="/random">
-        <Button>Random</Button>
-      </Link>
-      <div>
-        {questions &&
-          questions?.map(
-            (q: {
-              color: Key | null | undefined;
-              topics: any;
-              id: string | undefined;
-              url: string | UrlObject;
-              name:
+      <h1 className="text-4xl font-bold">{title}</h1>
+      <div className="flex gap-4">
+        <div>
+          {questions &&
+            questions?.map(
+              (q: {
+                color: Key | null | undefined;
+                topics: any;
+                id: string | undefined;
+                url: string | UrlObject;
+                name:
                 | string
                 | number
                 | boolean
@@ -63,47 +79,54 @@ function MainPage() {
                 | PromiseLikeOfReactNode
                 | null
                 | undefined;
-            }) => (
-              <div key={q.id}>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>
-                      <Link href={q.url}>{q.name}</Link>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex">
-                        {q.topics &&
-                          q.topics.map(
-                            (t: {
-                              color: ReactNode;
-                              name:
+              }) => (
+                <div key={q.id}>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>
+                        <Link href={q.url}>{q.name}</Link>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex">
+                          {q.topics &&
+                            q.topics.map(
+                              (t: {
+                                color: ReactNode;
+                                name:
                                 | string
                                 | number
                                 | boolean
                                 | ReactElement<
-                                    any,
-                                    string | JSXElementConstructor<any>
-                                  >
+                                  any,
+                                  string | JSXElementConstructor<any>
+                                >
                                 | Iterable<ReactNode>
                                 | ReactPortal
                                 | PromiseLikeOfReactNode
                                 | null
                                 | undefined;
-                            }) => (
-                              <div key={q.id}>
-                                <h3 className="bg-green-200 w-fit px-2 py-1 mx-1 rounded-xl flex justify-center items-center">
-                                  {t.name}
-                                </h3>
-                              </div>
-                            )
-                          )}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-            )
-          )}
+                              }) => (
+                                <div key={q.id}>
+                                  <h3 className="bg-green-200 w-fit px-2 py-1 mx-1 rounded-xl flex justify-center items-center">
+                                    {t.name}
+                                  </h3>
+                                </div>
+                              )
+                            )}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              )
+            )}
+        </div>
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          className="rounded-md border"
+        />
       </div>
     </main>
   );
