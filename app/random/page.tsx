@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const Random = () => {
+const RandomPage = () => {
   const [loading, setLoading] = useState<any>(false);
   const [randomQuestion, setRandomQusetion] = useState<any>();
 
@@ -32,4 +32,4 @@ const Random = () => {
   );
 };
 
-export default Random;
+export default RandomPage;

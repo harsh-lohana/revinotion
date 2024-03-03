@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CodeIcon } from "lucide-react";
 
-const page = () => {
+const LandingPage = () => {
 
   const [loading, setLoading] = useState<any>(false);
   const [problem, setProblem] = useState<any>();
@@ -65,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LandingPage;
