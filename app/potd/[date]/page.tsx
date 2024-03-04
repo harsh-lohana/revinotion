@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CodeIcon } from "lucide-react";
 
-export default function POTDPage({ params }) {
+export default function POTDPage({ params }: {
+    params: { date: string }
+}) {
 
     const [loading, setLoading] = useState<any>(false);
     const [problem, setProblem] = useState<any>();
