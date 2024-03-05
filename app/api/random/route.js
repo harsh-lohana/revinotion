@@ -39,5 +39,5 @@ export async function GET(req) {
     },
   });
   console.log(potd);
-  return Response.res.setHeader('Cache-Control', 'no-store').json({ potd });
+  return Response.setHeader('Cache-Control', 'no-store').json({ potd });
 }
