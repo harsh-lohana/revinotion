@@ -38,6 +38,5 @@ export async function GET(req) {
       topics: random.topics
     },
   });
-  console.log(potd);
-  return Response.setHeader('Cache-Control', 'no-store').json({ potd });
+  return Response.json({potd});
 }
