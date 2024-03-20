@@ -1,15 +1,16 @@
 import prisma from "@/app/lib/prisma";
 
 export async function GET(req) {
-  let lastDay = Date.now() - (24 * 60 * 60 * 1000);
-  lastDay = new Date(lastDay).toISOString();
+  const date = new Date();
+  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  const finalDate = utcDate.toISOString();
   const problems = await prisma.problem.findMany({
     where: {
       createdAt: {
-        gte: lastDay
+        gte: finalDate
       },
     },
   })
-  const potd = problems[problems.length - 1];
+  const potd = problems[0];
   return Response.json({ potd });
 }

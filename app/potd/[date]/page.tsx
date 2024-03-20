@@ -19,7 +19,6 @@ export default function POTDPage({ params }: {
             const res = await fetch(`/api/potd/${date}`, { cache: "no-store" });
             const output = await res.json();
             setProblem(output.potd);
-            console.log(output.potd);
             setLoading(false);
         })();
         return () => { };

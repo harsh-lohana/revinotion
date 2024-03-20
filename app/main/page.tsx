@@ -52,9 +52,8 @@ function MainPage() {
       isFirstRun.current = false;
       return;
     }
-    const last = date - (24 * 60 * 60 * 1000);
-    const lastDay = new Date(last).toISOString();
-    push(`/potd/${lastDay}`)
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    push(`/potd/${utcDate.toISOString()}`)
   }, [date]);
 
   return (

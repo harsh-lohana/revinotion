@@ -15,7 +15,6 @@ const LandingPage = () => {
       const resq = await fetch("/api/potd", { cache: "no-store" });
       const op = await resq.json();
       setProblem(op.potd);
-      console.log(op.potd);
       setLoading(false);
     })();
     return () => { };
