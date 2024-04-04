@@ -34,10 +34,14 @@ function MainPage() {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const res = await fetch("/api/title", { cache: "no-store" });
+      const res = await fetch("/api/title", { cache: "no-store" })
       const output = await res.json();
       setTitle(output.title);
-      const resq = await fetch("/api/questions", { cache: "no-store" });
+      const resq = await fetch("/api/questions", {
+        next: {
+          revalidate: 0,
+        }
+      });
       const op = await resq.json();
       setQusetions(op.questions);
       setLoading(false);
@@ -52,8 +56,11 @@ function MainPage() {
       isFirstRun.current = false;
       return;
     }
+    console.log(date);
     const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-    push(`/potd/${utcDate.toISOString()}`)
+    const newDate = new Date();
+    newDate.setDate(utcDate.getDate() + 1);
+    push(`/potd/${newDate.toISOString()}`)
   }, [date]);
 
   return (
