@@ -64,9 +64,9 @@ function MainPage() {
   }, [date]);
 
   return (
-    <main className="flex flex-col h-screen items-center">
+    <main className="flex flex-col min-h-screen items-center">
       <h1 className="text-4xl font-bold">{title}</h1>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-around  w-[80%]">
         <div>
           {questions &&
             questions?.map(
@@ -127,12 +127,14 @@ function MainPage() {
               )
             )}
         </div>
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-md border"
-        />
+        <div>
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border w-fit"
+          />
+        </div>
       </div>
     </main>
   );

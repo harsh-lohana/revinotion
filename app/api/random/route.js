@@ -8,6 +8,8 @@ const notion = new Client({
   auth: secret,
 });
 
+export const revalidate = 0
+
 export async function GET(req) {
   if (!secret || !dbId) throw new Error("Missing Notion stuff!");
   const res = await notion.databases.query({
