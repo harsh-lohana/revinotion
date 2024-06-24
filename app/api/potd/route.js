@@ -1,21 +1,27 @@
 import prisma from "@/app/lib/prisma";
 
 export async function GET(req) {
+
   const date = new Date();
-  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-  // const newDate = new Date();
-  // newDate.setDate(utcDate.getDate() + 1);
-  const finalDate = utcDate.toISOString();
-  console.log(finalDate)
+  var startOfDay = new Date(date);
+  startOfDay.setUTCDate(startOfDay.getUTCDate() + 1);
+  startOfDay.setUTCHours(0, 0, 0, 0);
+  var endOfDay = new Date(date);
+  endOfDay.setUTCDate(endOfDay.getUTCDate() + 1);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+
+  console.log(date, startOfDay, endOfDay)
+
   const problems = await prisma.problem.findMany({
     where: {
       createdAt: {
-        gte: finalDate
+        gte: startOfDay,
+        lte: endOfDay
       },
     },
   })
   if (problems) {
-    const potd = problems[problems.length - 1];
+    const potd = problems[0];
     return Response.json({ potd });
   } else {
     return Response.json({ msg: "No problems found!" })

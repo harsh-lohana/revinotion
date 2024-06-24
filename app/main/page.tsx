@@ -57,10 +57,7 @@ function MainPage() {
       return;
     }
     console.log(date);
-    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-    const newDate = new Date();
-    newDate.setDate(utcDate.getDate() + 1);
-    push(`/potd/${newDate.toISOString()}`)
+    push(`/potd/${date}`)
   }, [date]);
 
   return (
@@ -90,7 +87,7 @@ function MainPage() {
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                       <AccordionTrigger>
-                        <Link href={q.url}>{q.name}</Link>
+                        {q.url !== null ? <Link href={q.url.toString()}>{q.name}</Link> : <></>}
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex">
