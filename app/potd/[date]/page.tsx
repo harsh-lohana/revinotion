@@ -8,10 +8,10 @@ export default function POTDPage({ params }: {
     params: { date: string }
 }) {
 
-    const [loading, setLoading] = useState<any>(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [problem, setProblem] = useState<any>();
 
-    const date = params.date;
+    const date: string = params.date;
 
     useEffect(() => {
         (async () => {
@@ -26,9 +26,10 @@ export default function POTDPage({ params }: {
 
     return (
         <main>
-            {problem && (
+            {problem ? (
                 <div className="m-2 w-4/5">
-                    <h2 className="text-2xl font-bold">POTD</h2>
+                    <h2 className="text-2xl font-bold">POTD for {date.substring(12, 14)} {date.substring(6, 9)} {date.substring(17, 21)}</h2>
+                    <h2 className="text-2xl font-bold">POTD for {date}</h2>
                     <div className="flex gap-2">
                         <CodeIcon className="w-16 h-16 rounded-lg p-2 bg-gray-100/50 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400" />
                         <div className="flex flex-col justify-center">
@@ -39,7 +40,7 @@ export default function POTDPage({ params }: {
                         </div>
                     </div>
                 </div>
-            )}
+            ) : <h1>Loading...</h1>}
         </main>
     )
 }
