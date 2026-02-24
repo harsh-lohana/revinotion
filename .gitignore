@@ -22,6 +22,7 @@ frontend/yarn-error.log*
 backend/venv/
 backend/env/
 backend/ENV/
+backend/.env/
 backend/.venv/
 
 # Python Bytecode & Cache
