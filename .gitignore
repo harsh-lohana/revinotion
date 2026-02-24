@@ -1,0 +1,41 @@
+# --- System / IDE Files ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# --- React (Frontend) ---
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# --- FastAPI (Backend) ---
+# Python Virtual Environments
+backend/venv/
+backend/env/
+backend/ENV/
+backend/.venv/
+
+# Python Bytecode & Cache
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.pytest_cache/
+backend/.mypy_cache/
+
+# FastAPI / Python Environment Variables
+backend/.env
+
+# --- Database ---
+*.db
+
+# --- OS / Miscellaneous ---
+.dockerignore
