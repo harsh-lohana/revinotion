@@ -1,8 +1,20 @@
 import os
+import json
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from notion_client import AsyncClient
+from services.redis import get_redis
+from datetime import datetime, time
+
+def seconds_until_midnight() -> int:
+    now = datetime.now()
+    midnight = datetime.combine(now.date(), time(0, 0, 0))
+    # If it's already past midnight, get next midnight
+    if now >= midnight:
+        from datetime import timedelta
+        midnight += timedelta(days=1)
+    return int((midnight - now).total_seconds())
 
 app = FastAPI()
 load_dotenv()
@@ -80,6 +92,12 @@ def parse_block(block):
 
 @app.get("/questions")
 async def get_questions():
+    redis = await get_redis()
+    cached = await redis.get("daily:problem")
+    if cached:
+        print("REDIS CACHE")
+        return json.loads(cached)
+
     response = await notion.databases.retrieve(database_id=DATABASE_ID)
     DATA_SOURCE_ID = response["data_sources"][0]["id"]
     title = response["data_sources"][0]["name"]
@@ -96,6 +114,7 @@ async def get_questions():
             "topics": [t["name"] for t in page["properties"]["Topics"]["multi_select"]],
             "blocks": parsed_blocks
         })
+    await redis.setex("daily:problem", seconds_until_midnight(), json.dumps(questions))
     # for q in questions:
     #     print(q)
     return {"questions": questions}
